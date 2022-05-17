@@ -15,8 +15,16 @@ function read(reservation_id){
         .first()
 }
 
+function create(reservation){
+    return knex("reservations")
+        .insert(reservation)
+        .returning("*")
+        .then((created) => created[0])
+}
+
 
 module.exports = {
     list,
     read,
+    create,
 }

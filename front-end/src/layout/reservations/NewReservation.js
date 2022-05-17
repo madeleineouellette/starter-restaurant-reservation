@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import {createReservation} from "../../utils/api"
 import ReservationForm from "./ReservationForm"
 import ErrorAlert from "../ErrorAlert";
-import useState from "react-usestateref"
+//import useState from "react-usestateref"
 
 function NewReservation(){
     
@@ -17,9 +17,10 @@ function NewReservation(){
         party_size: ""
     }
     
-    const [formData, setFormData, formDataRef] = useState({})
-    const [showError, setShowError, showErrorRef] = useState({})
-    let message = {}
+    const [formData, setFormData] = useState({initialFormData})
+    //const [showError, setShowError, showErrorRef] = useState({})
+    //let message = {}
+    const [showError, setShowError] = useState(false)
 
     const handleChange = (event) => {
         event.preventDefault()
@@ -41,26 +42,29 @@ function NewReservation(){
 
 
         if(dateEntered < Date.now()){
-            message.message = "Date is in the past."
-            setShowError(message)
+            console.log("date is in the past")
+            // message.message = "Date is in the past."
+            // setShowError(message)
+            setShowError(true)
        }
 
        if(dayOfTheWeek === 1){
-           console.log("inside tuesday if")
-           message.message = "Restaurant is closed on Tuesdays."
-           console.log(message)
-           setShowError(message)
+           console.log("restaurant is closed on Tuesdays")
+           setShowError(true)
+        //    console.log("inside tuesday if")
+        //    message.message = "Restaurant is closed on Tuesdays."
+        //    console.log(message)
+        //    setShowError(message)
        }
 
         await createReservation(formData, abortController.signal)
-        setFormData({})
+        setFormData({initialFormData})
         history.push(`/dashboard?date=${formData.date}`)
     }
-    console.log(message)
     return (
         <div>
             <h2>Create A New Reservation:</h2>
-            <ErrorAlert error={showErrorRef.current} />
+            <ErrorAlert error={showError} />
             <ReservationForm 
             handleChange={handleChange}
             submitHandler={submitHandler}

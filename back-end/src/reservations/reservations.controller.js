@@ -17,6 +17,11 @@ async function read(req, res){
   res.json({ data })
 }
 
+async function create(req, res){
+  const reservation = await reservationsService.create(req.body.data)
+  res.status(201).json({data: reservation})
+}
+
 //GET /reservations?=:date
 
 //PUT /reservations/:reservation_id/status
@@ -27,4 +32,6 @@ async function read(req, res){
 
 module.exports = {
   list,
+  read,
+  create,
 };
