@@ -7,7 +7,7 @@ import {createTable} from "../../utils/api"
 function Tables(){
     const history = useHistory()
     const initialFormData = {
-        table: "",
+        table_name: "",
         capacity:"" 
     }
     const [formData, setFormData] = useState(initialFormData)
@@ -40,7 +40,7 @@ function Tables(){
                     type="text"
                     minLength={2}
                     name="table_name"
-                    value={formData.table}
+                    value={formData.table_name}
                     onChange={changeHandler}
                     />
                 </div>

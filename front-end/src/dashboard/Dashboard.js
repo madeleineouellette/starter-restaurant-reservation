@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
+import TableDisplay from "../layout/tables/TableDisplay"
 import ErrorAlert from "../layout/ErrorAlert";
 import { next, previous, today } from "../utils/date-time";
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import useQuery from "../utils/useQuery";
 
 /**
@@ -13,6 +14,7 @@ import useQuery from "../utils/useQuery";
  */
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([])
   const [reservationsError, setReservationsError] = useState(null);
   const history = useHistory()
   const query = useQuery();
@@ -31,7 +33,8 @@ function Dashboard({ date }) {
 
   function loadDashboard() {
     const abortController = new AbortController();
-    setReservationsError(null);
+   // setReservationsError(null);
+    listTables(abortController.signal).then(setTables)
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
@@ -57,6 +60,7 @@ function Dashboard({ date }) {
   }
 
 
+
   return (
     <main>
       <h1 className="text-center">Dashboard</h1>
@@ -68,12 +72,30 @@ function Dashboard({ date }) {
       <ErrorAlert error={reservationsError} />
       <h4>Reservations</h4>
       <div>
-        {JSON.stringify(reservations)}
+        {reservations?.map((reservation) => 
+        <div className="card">
+          <div key={reservation.date}>
+            <h5>{reservation.reservation_date}</h5>
+          </div>
+          <div key={reservation.id}>
+            <h5>{reservation.reservation_id}</h5>
+          </div>
+          <div>
+            <p data-reservation-id-status={reservation.reservation_id}>Booked</p>
+          </div>
+          <div>
+            <Link className="btn btn-secondary" to={`/reservations/${reservation.reservation_id}/seat`}>Seat</Link>
+          </div>
+          <div>
+            <Link className="btn btn-secondary" to={`/reservations/${reservation.reservation_id}/edit`}>Edit</Link>
+          </div>
+        </div>
+        )}
       </div>
-      {/* <div>
-        <Link className="btn btn-primary">Seat</Link>
-      </div> */}
       <h4>Tables</h4>
+      <div>
+        <TableDisplay tables={tables}/>
+      </div>
       <div className="d-flex justify-content-between m-4">
           <button className="btn btn-secondary px-3 py-2" onClick={onPreviousClick}>Previous</button>
           <button className="btn btn-primary px-3 py-2" onClick={() => history.push(`dashboard?date=${today()}`)}>Today</button>

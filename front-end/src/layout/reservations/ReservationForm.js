@@ -46,6 +46,8 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     <input 
                     className="form-control"
                     type="date"
+                    placeholder="YYYY-MM-DD" 
+                    pattern="\d{4}-\d{2}-\d{2}"
                     name="date"
                     onChange={handleChange}
                     value={formData.date}
@@ -57,6 +59,8 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     <input 
                     className="form-control"
                     type="time"
+                    placeholder="HH:MM" 
+                    pattern="[0-9]{2}:[0-9]{2}"
                     name="time" 
                     onChange={handleChange}
                     value={formData.time}

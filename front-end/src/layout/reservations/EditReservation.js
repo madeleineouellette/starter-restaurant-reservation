@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import ReservationForm from "./ReservationForm";
-import { useHistory } from "react-router-dom";
+import { readReservation } from "../../utils/api";
+import { useParams } from "react-router";
 
 
 function EditReservation(){
-
-    const history = useHistory()
+    const {reservation_id} = useParams()
     const initialFormData = {
         first_name: "",
         last_name: "",
@@ -16,6 +16,15 @@ function EditReservation(){
     }
     
     const [formData, setFormData] = useState(initialFormData)
+
+    useEffect(() => {
+        const abortController = new AbortController()
+        async function loadReservation(){
+            const response = await readReservation(reservation_id, abortController.signal)
+            setFormData({...response})
+        }
+        loadReservation()
+    }, [reservation_id])
 
     const handleChange = (event) => {
         event.preventDefault()

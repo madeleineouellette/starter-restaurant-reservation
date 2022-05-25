@@ -6,8 +6,8 @@ import ErrorAlert from "../ErrorAlert";
 //import useState from "react-usestateref"
 
 function NewReservation(){
-    
     const history = useHistory()
+
     const initialFormData = {
         first_name: "",
         last_name: "",
@@ -17,7 +17,7 @@ function NewReservation(){
         party_size: ""
     }
     
-    const [formData, setFormData] = useState({initialFormData})
+    const [formData, setFormData] = useState(initialFormData)
     //const [showError, setShowError, showErrorRef] = useState({})
     //let message = {}
     const [showError, setShowError] = useState(false)
@@ -30,6 +30,7 @@ function NewReservation(){
     }
 
     const submitHandler = async (event) => {
+        console.log(formData.date)
         const abortController = new AbortController()
         event.preventDefault()  
 
@@ -58,7 +59,7 @@ function NewReservation(){
        }
 
         await createReservation(formData, abortController.signal)
-        setFormData({initialFormData})
+        setFormData(initialFormData)
         history.push(`/dashboard?date=${formData.date}`)
     }
     return (
