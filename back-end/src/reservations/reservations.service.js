@@ -32,16 +32,16 @@ function searchByPhoneNumber(mobile_number) {
   }
 
 //POST new reservation
-function create(reservation){
-    return knex("reservations")
-        .insert(reservation)
+async function create(newReservation){
+    return await knex("reservations")
+        .insert(newReservation)
         .returning("*")
         .then((created) => created[0])
 }
 
 //PUT current reservation
-function update(reservation_id, updatedReservation){
-    return knex("reservations")
+async function update(reservation_id, updatedReservation){
+    return await knex("reservations")
         .select("*")
         .where({reservation_id: reservation_id})
         .update(updatedReservation, "*")

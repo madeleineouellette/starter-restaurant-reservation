@@ -8,7 +8,7 @@ function Tables(){
     const history = useHistory()
     const initialFormData = {
         table_name: "",
-        capacity:"" 
+        capacity: 0 
     }
     const [formData, setFormData] = useState(initialFormData)
 
@@ -22,8 +22,11 @@ function Tables(){
     const submitHandler = async (event) => {
         const abortController = new AbortController()
         event.preventDefault()  
-        console.log("TABLES submit handler triggered")
-        await createTable(formData, abortController.signal)
+        const newTable = {
+            table_name: formData.table_name,
+            capacity: Number(formData.capacity)
+        }
+        await createTable(newTable, abortController.signal)
         setFormData(initialFormData)
         history.push("/")
     }
@@ -40,7 +43,6 @@ function Tables(){
                     type="text"
                     minLength={2}
                     name="table_name"
-                    value={formData.table_name}
                     onChange={changeHandler}
                     />
                 </div>
@@ -52,13 +54,12 @@ function Tables(){
                     min={1} 
                     placeholder={1} 
                     type="number"
-                    value={formData.capacity}
                     onChange={changeHandler}
                     />
                 </div>
                 <div className="d-grid col-3 mx-auto">
                 <button type="submit" className="btn btn-primary text-white btn-lg">Submit</button>
-                <button className="btn btn-secondary text-white btn-lg" onClick={() => history.push("/")}>Cancel</button>
+                <button className="btn btn-secondary text-white btn-lg" onClick={() => history.goBack()}>Cancel</button>
                 </div>
            </form>
        </div>

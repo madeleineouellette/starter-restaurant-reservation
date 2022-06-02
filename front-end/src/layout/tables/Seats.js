@@ -4,17 +4,16 @@ import { listTables } from "../../utils/api";
 
 function Seats(){
     const history = useHistory()
-    const [tablesList, setTablesList] = useState()
-    const {reservation_id} = useParams
+    const [tablesList, setTablesList] = useState([])
+    const {reservation_id} = useParams()
 
-    useEffect(() => {
-        const abortController = new AbortController()
-        async function loadTables(){
-            const response = await listTables(reservation_id, abortController.signal)
-            setTablesList({response})
-        }
-        loadTables()
-    }, [reservation_id])
+
+    function loadTables(){
+        const abortController = new AbortController();
+        listTables(abortController.signal).then(setTablesList)
+    }
+
+    useEffect(loadTables, [reservation_id])
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -22,20 +21,26 @@ function Seats(){
         history.push("/")
     }
 
+
+    const tableOptions = tablesList.map((table) => {
+        return (
+        <option key={table.table_id} value={table.table_id}>
+            {table.table_name} - {table.capacity}
+         </option>
+        )
+        }
+    )
+    
+
     return (
-        <div className="container">
-            <form onSubmit={submitHandler}>
-                {/* <div>
-                    {tablesList.map((table) => 
-                            <select name="table_id">
-                            <option value={table.table_id}>
-                                {table.table_name} - {table.capacity}
-                            </option>
-                           </select>    
-                    )}
-                <button className="btn btn-primary text-white">Submit</button>
-                <button className="btn btn-secondary text-white" onClick={() => history.push("/")}>Cancel</button>
-                </div> */}
+        <div>
+            <h3>Seating for Reservation #{reservation_id}</h3>
+                 <form onSubmit={submitHandler}>
+            <select>
+                {tableOptions}
+            </select>
+            <button className="btn btn-primary text-white">Submit</button>
+             <button className="btn btn-secondary text-white" onClick={() => history.push("/")}>Cancel</button>
             </form>
         </div>
     )

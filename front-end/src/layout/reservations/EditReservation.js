@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from "react";
 import ReservationForm from "./ReservationForm";
-import { readReservation } from "../../utils/api";
-import { useParams } from "react-router";
+import { readReservation, updateReservation } from "../../utils/api";
+import { useParams, useHistory } from "react-router";
+import { formatAsDate, formatAsTime } from "../../utils/date-time"
 
 
 function EditReservation(){
     const {reservation_id} = useParams()
+    const history = useHistory()
     const initialFormData = {
         first_name: "",
         last_name: "",
@@ -14,14 +16,14 @@ function EditReservation(){
         time: "",
         party_size: ""
     }
-    
     const [formData, setFormData] = useState(initialFormData)
 
     useEffect(() => {
         const abortController = new AbortController()
         async function loadReservation(){
             const response = await readReservation(reservation_id, abortController.signal)
-            setFormData({...response})
+            setFormData({...response, reservation_date: formatAsDate(response.reservation_date), 
+                reservation_time: formatAsTime(response.reservation_time), people: parseInt(response.people)})
         }
         loadReservation()
     }, [reservation_id])
@@ -33,11 +35,20 @@ function EditReservation(){
         }))
     }
 
+    const submitHandler = async (event) => {
+        console.log("edit res submit button clicked")
+        const abortController = new AbortController()
+        event.preventDefault()
+        await updateReservation(formData, abortController.signal)
+        history.push(`/dashboard?date=${formData.reservation_date}`)
+    }
+
     return (
         <div>
             <h2>Edit Reservation:</h2>
             <ReservationForm 
             handleChange={handleChange}
+            submitHandler={submitHandler}
             formData={formData}
             />
         </div>

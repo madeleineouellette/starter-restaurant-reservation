@@ -30,14 +30,11 @@ function NewReservation(){
     }
 
     const submitHandler = async (event) => {
-        console.log(formData.date)
         const abortController = new AbortController()
         event.preventDefault()  
-
         const dateEntered = Date.parse(formData.date)
         const day = new Date(dateEntered)
         const dayOfTheWeek = day.getDay()
-        
         const hours = day.getHours()
         console.log(day, hours)
 

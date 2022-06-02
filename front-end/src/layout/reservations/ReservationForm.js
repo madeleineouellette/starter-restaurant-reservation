@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 function ReservationForm({ handleChange, submitHandler, formData }){
-
     const history = useHistory()
+    
     
     return (
         <div className="mb-3 container-fluid">
@@ -15,7 +15,7 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     name="first_name" 
                     minLength={1}
                     onChange={handleChange}
-                    value={formData.firstName}
+                    value={formData.first_name}
                     />
                 </div>
                 <div>
@@ -25,7 +25,7 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     name="last_name" 
                     minLength={1}
                     onChange={handleChange}
-                    value={formData.lastName}
+                    value={formData.last_name}
                     />
                 </div>
                 <div>
@@ -38,7 +38,7 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     maxLength={10}
                     placeholder="(---) --- ----"
                     onChange={handleChange}
-                    value={formData.mobileNumber}
+                    value={formData.mobile_number}
                     />
                 </div>
                 <div>
@@ -48,9 +48,9 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     type="date"
                     placeholder="YYYY-MM-DD" 
                     pattern="\d{4}-\d{2}-\d{2}"
-                    name="date"
+                    name="reservation_date"
                     onChange={handleChange}
-                    value={formData.date}
+                    value={formData.reservation_date}
                     />
                     
                 </div>
@@ -61,9 +61,9 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     type="time"
                     placeholder="HH:MM" 
                     pattern="[0-9]{2}:[0-9]{2}"
-                    name="time" 
+                    name="reservation_time" 
                     onChange={handleChange}
-                    value={formData.time}
+                    value={formData.reservation_time}
                     />
                 </div>
                 <div>
@@ -74,7 +74,7 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     min={1} 
                     max={15} 
                     placeholder={1} 
-                    value={formData.partySize} 
+                    value={formData.people} 
                     type="number" 
                     onChange={handleChange} 
                     />

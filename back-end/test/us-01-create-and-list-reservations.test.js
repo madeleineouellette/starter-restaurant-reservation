@@ -104,7 +104,7 @@ describe("US-01 - Create and list reservations", () => {
         .post("/reservations")
         .set("Accept", "application/json")
         .send({ data });
-
+      console.log(response.body.error)
       expect(response.body.error).toContain("last_name");
       expect(response.status).toBe(400);
     });

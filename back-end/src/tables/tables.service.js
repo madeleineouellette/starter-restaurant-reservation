@@ -1,7 +1,7 @@
 const knex = require("../db/connection");
 
 function list(){
-    return knex("tables").select("*")
+    return knex("tables").select("*").orderBy("table_name")
 }
 
 function read(table_id){
@@ -18,10 +18,10 @@ function create(table){
         .then((created) => created[0])
 }
 
-function update(table_id, updatedTable){
+function update(updatedTable){
     return knex("tables")
         .select("*")
-        .where({table_id: table_id})
+        .where({table_id: updatedTable.table_id})
         .update(updatedTable, "*")
 }
 

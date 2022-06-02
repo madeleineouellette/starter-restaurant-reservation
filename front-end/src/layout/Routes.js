@@ -30,13 +30,13 @@ function Routes() {
        <NewReservation />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={today} />
+        <Dashboard date={today()} />
       </Route>
       <Route exact={true} path="/tables/new">
         <Tables />
       </Route>
       <Route exact={true} path="/search">
-        <SearchBar />  
+        <SearchBar/>  
       </Route>   
       <Route exact={true} path="/reservations/:reservation_id/edit">
         <EditReservation />

@@ -3,8 +3,9 @@ import { listReservations, listTables } from "../utils/api";
 import TableDisplay from "../layout/tables/TableDisplay"
 import ErrorAlert from "../layout/ErrorAlert";
 import { next, previous, today } from "../utils/date-time";
-import { useHistory, Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import useQuery from "../utils/useQuery";
+import ReservationDisplay from "../layout/reservations/ReservationDisplay";
 
 /**
  * Defines the dashboard page.
@@ -20,6 +21,7 @@ function Dashboard({ date }) {
   const query = useQuery();
   const queryDate = query.get("date")
   const [sameDate, setSameDate] = useState(true)
+   
 
   useEffect(() => {
     if(!queryDate || queryDate === today()){
@@ -33,10 +35,14 @@ function Dashboard({ date }) {
 
   function loadDashboard() {
     const abortController = new AbortController();
-   // setReservationsError(null);
+    const resDate = queryDate ? queryDate : date
     listTables(abortController.signal).then(setTables)
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
+    listReservations({ date: resDate }, abortController.signal)
+      .then(
+        data => {
+          setReservations(data)
+        }
+      )
       .catch(setReservationsError);
     return () => abortController.abort();
   }
@@ -59,7 +65,24 @@ function Dashboard({ date }) {
     setSameDate(false)
   }
 
+  function deleteButtonHandler(reservation_id){
+    if (
+      window.confirm(
+        "Do you want to cancel this reservation? This cannot be undone."
+      )
+    ) {
+      (history.go(0));
+    }
+  }
 
+
+  //when reservation status is 'booked' - display 'seat' button 
+  //when 'seat' button is clicked, reservation status changes to 'seated' and 'seat' button disappears
+  //'finish' button on the table, changes the corresponding reservation status to 'finished' and removes the res from the dashboard
+  
+  //{bookedStatus ? <button>Seat</button> : <p></p>}
+  
+  
 
   return (
     <main>
@@ -70,37 +93,18 @@ function Dashboard({ date }) {
         </div>
       </div>
       <ErrorAlert error={reservationsError} />
-      <h4>Reservations</h4>
       <div>
-        {reservations?.map((reservation) => 
-        <div className="card">
-          <div key={reservation.date}>
-            <h5>{reservation.reservation_date}</h5>
-          </div>
-          <div key={reservation.id}>
-            <h5>{reservation.reservation_id}</h5>
-          </div>
-          <div>
-            <p data-reservation-id-status={reservation.reservation_id}>Booked</p>
-          </div>
-          <div>
-            <Link className="btn btn-secondary" to={`/reservations/${reservation.reservation_id}/seat`}>Seat</Link>
-          </div>
-          <div>
-            <Link className="btn btn-secondary" to={`/reservations/${reservation.reservation_id}/edit`}>Edit</Link>
-          </div>
-        </div>
-        )}
-      </div>
-      <h4>Tables</h4>
-      <div>
-        <TableDisplay tables={tables}/>
+        <ReservationDisplay reservations={reservations} deleteButtonHandler={deleteButtonHandler}/>
       </div>
       <div className="d-flex justify-content-between m-4">
           <button className="btn btn-secondary px-3 py-2" onClick={onPreviousClick}>Previous</button>
-          <button className="btn btn-primary px-3 py-2" onClick={() => history.push(`dashboard?date=${today()}`)}>Today</button>
+          <button className="btn btn-primary px-3 py-2" onClick={() => history.push("/")}>Today</button>
           <button className="btn btn-secondary px-3 py-2" onClick={onNextClick}>Next</button>
         </div>
+      <h4 className="text-center">Tables</h4>
+      <div>
+        <TableDisplay tables={tables}/>
+      </div>
         
     </main>
   );
