@@ -25,11 +25,23 @@ function update(updatedTable){
         .update(updatedTable, "*")
 }
 
-function destroy(table_id){
+function seatTable(table_id, reservation_id){
     return knex("tables")
-        .where({table_id: table_id})
-        .del()
+    .where({table_id})
+    .update({reservation_id: reservation_id, status: "occupied"})
 }
+
+function freeTable(table_id, reservation_id){
+    return knex("tables")
+    .where({table_id})
+    .update({reservation_id: null, status: "free"})
+}
+
+// function destroy(table_id){
+//     return knex("tables")
+//         .where({table_id: table_id})
+//         .del()
+// }
 
 
 module.exports = {
@@ -37,5 +49,5 @@ module.exports = {
     read,
     create,
     update,
-    destroy
+    seatTable,
 }
