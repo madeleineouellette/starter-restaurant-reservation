@@ -36,7 +36,6 @@ function EditReservation(){
     }
 
     const submitHandler = async (event) => {
-        console.log("edit res submit button clicked")
         const abortController = new AbortController()
         event.preventDefault()
         await updateReservation(formData, abortController.signal)

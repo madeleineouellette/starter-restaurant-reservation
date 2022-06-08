@@ -82,7 +82,7 @@ async function seatReservation(reservation_id, table_id) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "PUT",
-    body: JSON.stringify({ data: { reservation_id } }),
+    body: JSON.stringify({ data: { reservation_id, status: "occupied" } }),
     headers,
   };
   return await fetchJson(url, options, {});

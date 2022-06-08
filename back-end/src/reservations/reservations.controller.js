@@ -40,7 +40,7 @@ const formattedTime = /[0-9]{2}:[0-9]{2}/;
 
 //check if reservation properties are valid
 function hasValidProperties(req, res, next){
-  const {data}  = req.body;
+  const {data}  = req.body
   if(!data){
     return next({status: 400, message: 'Request requires data'})
   }
@@ -52,7 +52,7 @@ function hasValidProperties(req, res, next){
     if(!data[property]){
       return next({ status: 400, message: `Requires ${property}.`})
     }
-    if(property === "people" && !Number.isInteger(data.people)){
+    if(property === "people" && !Number.isInteger((data.people))){
       return next({status: 400, message: `${property} field must be in the correct format.`})
     }
     if(property === "reservation_date" && !formattedDate.test(data.reservation_date)){
@@ -62,16 +62,8 @@ function hasValidProperties(req, res, next){
       return next({status: 400, message: `Requires ${property} to be formatted as HH:MM.`})
     }
   })
-  next()
+  return next()
 }
-
-// const hasRequiredProperties = hasProperties(
-//   "first_name",
-//   "last_name",
-//   "mobile_number",
-//   "reservation_date",
-//   "people"
-// )
 
 //check if date is before current date AND not a Tuesday
 function checkDate(req, res, next){
@@ -118,18 +110,6 @@ function checkDate(req, res, next){
   return next()
 }
 
-// //check res status
-
-// function resStatus(req, res, next){
-//   const data = req.body
-//   if(data.status === "seated" || data.status === "finished"){
-//     return next({
-//       status: 400,
-//       message: "New reservations cannot start with a status of seated or finished."
-//     })
-//   }
-//   next()
-// }
 
 //check if reservation exists based on ID#
 async function reservationExists(req, res, next){
@@ -144,31 +124,7 @@ async function reservationExists(req, res, next){
 
 //check res status
 
-function validateStatus(req, res, next){
-  const {data} = req.body
-  //console.log(data, data.status)
-  if(!data.status){
-    return ({
-      status: 400,
-      message: "Reservation cannot have an unknown status."
-    })
-  }
-  if(
-    req.body.data.status !== "booked" &&
-    req.body.data.status !== "seated" &&
-    req.body.data.status !== "finished" &&
-    req.body.data.status !== "cancelled"
-  ){
-    return next({
-      status: 400,
-      message: `status field cannot be ${req.body.status}`
-    })
-  }
-  return next()
-}
-
 function hasValidStatus(req, res, next){
- // console.log("req: ", req.body.data.status, "locals:", res.locals.reservation.status)
 
   if(!req.body.data.status){
     return next({
@@ -244,9 +200,9 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [list],
-  read: [reservationExists, asyncErrorBoundary(read)],
+  read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   create: [hasValidProperties, checkDate, asyncErrorBoundary(create)],
-  updateStatus: [reservationExists, hasValidStatus, asyncErrorBoundary(updateResStatus)],
-  update: [reservationExists, hasValidProperties, checkDate, asyncErrorBoundary(update)],
-  delete: [reservationExists, asyncErrorBoundary(destroy)]
+  updateStatus: [asyncErrorBoundary(reservationExists), hasValidStatus, asyncErrorBoundary(updateResStatus)],
+  update: [asyncErrorBoundary(reservationExists), hasValidProperties, checkDate, asyncErrorBoundary(update)],
+  delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)]
 };

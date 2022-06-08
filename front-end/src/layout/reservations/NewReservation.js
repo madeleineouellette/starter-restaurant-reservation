@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import {createReservation} from "../../utils/api"
 import ReservationForm from "./ReservationForm"
 import ErrorAlert from "../ErrorAlert";
-//import useState from "react-usestateref"
 
 function NewReservation(){
     const history = useHistory()
@@ -12,14 +11,12 @@ function NewReservation(){
         first_name: "",
         last_name: "",
         mobile_number: "",
-        date: "",
-        time: "",
-        party_size: ""
+        reservation_date: "",
+        reservation_time: "10:30",
+        people: 1
     }
     
     const [formData, setFormData] = useState(initialFormData)
-    //const [showError, setShowError, showErrorRef] = useState({})
-    //let message = {}
     const [showError, setShowError] = useState(false)
 
     const handleChange = (event) => {
@@ -29,35 +26,39 @@ function NewReservation(){
         }))
     }
 
+    function formatTime(time) {
+        let formatedTime = time.split("");
+        formatedTime.splice(5);
+        formatedTime = formatedTime.join("");
+        return formatedTime;
+      }
+    
+
     const submitHandler = async (event) => {
         const abortController = new AbortController()
         event.preventDefault()  
-        const dateEntered = Date.parse(formData.date)
+        const dateEntered = Date.parse(formData.reservation_date)
         const day = new Date(dateEntered)
         const dayOfTheWeek = day.getDay()
-        const hours = day.getHours()
-        console.log(day, hours)
-
+        const resTime = formatTime(formData.reservation_time)    
 
         if(dateEntered < Date.now()){
-            console.log("date is in the past")
-            // message.message = "Date is in the past."
-            // setShowError(message)
             setShowError(true)
        }
 
        if(dayOfTheWeek === 1){
-           console.log("restaurant is closed on Tuesdays")
            setShowError(true)
-        //    console.log("inside tuesday if")
-        //    message.message = "Restaurant is closed on Tuesdays."
-        //    console.log(message)
-        //    setShowError(message)
        }
+
+       if(resTime >= "21:30" || resTime <= "10:30"){
+           setShowError(true)
+       }
+
+       
 
         await createReservation(formData, abortController.signal)
         setFormData(initialFormData)
-        history.push(`/dashboard?date=${formData.date}`)
+        history.push(`/dashboard?date=${formData.reservation_date}`)
     }
     return (
         <div>

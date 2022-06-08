@@ -47,6 +47,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         reservation_id: reservation.reservation_id,
       });
 
+
       page = await browser.newPage();
       page.on("console", onPageConsole);
       await page.setViewport({ width: 1920, height: 1080 });
@@ -72,7 +73,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
 
       const finishButtonSelector = `[data-table-id-finish="${table.table_id}"]`;
       await page.waitForSelector(finishButtonSelector);
-
+ 
       page.on("dialog", async (dialog) => {
         expect(dialog.message()).toContain(
           "Is this table ready to seat new guests?"
@@ -80,7 +81,9 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         await dialog.accept();
       });
 
+
       await page.click(finishButtonSelector);
+
 
       await page.waitForResponse((response) => {
         return response.url().endsWith(`/tables`);

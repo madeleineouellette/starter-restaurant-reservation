@@ -21,29 +21,24 @@ function SearchBar(){
         setForm({...form, [target.name]: target.value})
     }
 
+    const reservationList =
+        reservations && reservations.length ? 
+       (reservations?.map((reservation) => (
+          <ReservationDisplay 
+          reservation={reservation}
+          key={reservation.reservation_id}
+          />
+        ))) : "No reservations found!"
+      
+
     async function findHandler(event){
         event.preventDefault()
         const abortController = new AbortController()
-        const searchParameters = {
-            mobile_number: form.mobile_number
-        }
+        const parameters = {mobile_number: form.mobile_number}
         setForm(initialNumber)
-
-        const response = await listReservations(searchParameters, abortController.signal) 
+        const response = await listReservations(parameters, abortController.signal)
         setReservations(response)
-
-        console.log("SEARCH BAR find button triggered")
     }
-
-    const searchResults = reservations.length > 0 ? reservations.map((reservation) => {
-     return (
-         <ReservationDisplay 
-         key={reservation.reservation_id}
-         reservation={reservation}
-         />
-     )   
-    }) : <h4>No reservations found!</h4>
-    
 
     return (
     <div> 
@@ -62,8 +57,8 @@ function SearchBar(){
         <div>
           <button type="submit">Find</button>
       </div>
-      <div>{searchResults}</div>
       </form>
+        <div>{reservationList}</div>
     </div>
     )
 }

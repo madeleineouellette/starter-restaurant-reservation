@@ -59,7 +59,7 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     <input 
                     className="form-control"
                     type="time"
-                    placeholder="HH:MM" 
+                    placeholder="10:30" 
                     pattern="[0-9]{2}:[0-9]{2}"
                     name="reservation_time" 
                     onChange={handleChange}

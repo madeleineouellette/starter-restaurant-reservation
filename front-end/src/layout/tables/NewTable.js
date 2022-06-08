@@ -4,11 +4,11 @@ import {createTable} from "../../utils/api"
 
 
 
-function Tables(){
+function NewTable(){
     const history = useHistory()
     const initialFormData = {
         table_name: "",
-        capacity: 0 
+        capacity: 0
     }
     const [formData, setFormData] = useState(initialFormData)
 
@@ -67,4 +67,4 @@ function Tables(){
 }
 
 
-export default Tables
+export default NewTable

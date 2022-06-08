@@ -50,8 +50,10 @@ function Dashboard({ date }) {
   const onPreviousClick = (event) => {
     if(!queryDate){
       history.push(`dashboard?date=${previous(today())}`)
+      window.location.reload(true)
     } else {
     history.push(`dashboard?date=${previous(queryDate)}`)
+    window.location.reload(true)
     }
     setSameDate(false)
   }
@@ -59,29 +61,33 @@ function Dashboard({ date }) {
   const onNextClick = (event) => {
     if(!queryDate){
       history.push(`dashboard?date=${next(today())}`)
+      window.location.reload(true)
     } else {
       history.push(`dashboard?date=${next(queryDate)}`)
+      window.location.reload(true)
     }
     setSameDate(false)
   }
 
-  function deleteButtonHandler(reservation_id){
-    if (
-      window.confirm(
-        "Do you want to cancel this reservation? This cannot be undone."
-      )
-    ) {
-      (history.go(0));
-    }
+  
+  const TableList = () => {
+    return tables?.map((table) => (
+      <TableDisplay 
+      table={table}
+      key={table.table_id}
+      loadDashboard={loadDashboard}
+      />
+    ))
   }
 
-
-  //when reservation status is 'booked' - display 'seat' button 
-  //when 'seat' button is clicked, reservation status changes to 'seated' and 'seat' button disappears
-  //'finish' button on the table, changes the corresponding reservation status to 'finished' and removes the res from the dashboard
-  
-  //{bookedStatus ? <button>Seat</button> : <p></p>}
-  
+  const ReservationList = () => {
+    return reservations?.map((reservation) => (
+      <ReservationDisplay 
+      reservation={reservation}
+      key={reservation.reservation_id}
+      />
+    ))
+  }
   
 
   return (
@@ -94,7 +100,7 @@ function Dashboard({ date }) {
       </div>
       <ErrorAlert error={reservationsError} />
       <div>
-        <ReservationDisplay reservations={reservations} deleteButtonHandler={deleteButtonHandler}/>
+        <ReservationList />
       </div>
       <div className="d-flex justify-content-between m-4">
           <button className="btn btn-secondary px-3 py-2" onClick={onPreviousClick}>Previous</button>
@@ -103,7 +109,7 @@ function Dashboard({ date }) {
         </div>
       <h4 className="text-center">Tables</h4>
       <div>
-        <TableDisplay tables={tables}/>
+        <TableList />
       </div>
         
     </main>

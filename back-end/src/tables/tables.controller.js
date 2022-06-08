@@ -126,6 +126,7 @@ async function update(req, res) {
 }
 
 async function clearTable(req, res) {
+
   const table = res.locals.table
   const clearedTable = {...table, reservation_id: null}
   reservationsService.updateStatus(table.reservation_id, "finished");
@@ -135,8 +136,8 @@ async function clearTable(req, res) {
 
   module.exports = {
       list,
-      read: [tableExists, asyncErrorBoundary(read)],
+      read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],
       create: [hasValidProperties, asyncErrorBoundary(create)],
       update: [validRequest, asyncErrorBoundary(tableExists), asyncErrorBoundary(reservationExists), validateTable, asyncErrorBoundary(update)],
-      delete: [tableExists, checkOccupied, asyncErrorBoundary(clearTable)]
+      delete: [asyncErrorBoundary(tableExists), checkOccupied, asyncErrorBoundary(clearTable)]
   }
