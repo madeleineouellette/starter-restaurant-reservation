@@ -53,13 +53,11 @@ function NewReservation(){
        if(resTime >= "21:30" || resTime <= "10:30"){
            setShowError(true)
        }
-
-       
-
         await createReservation(formData, abortController.signal)
         setFormData(initialFormData)
         history.push(`/dashboard?date=${formData.reservation_date}`)
     }
+    
     return (
         <div>
             <h2>Create A New Reservation:</h2>
