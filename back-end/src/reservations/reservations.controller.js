@@ -26,17 +26,6 @@ const dates = [
 const formattedDate = /[0-9]{4}-[0-9]{2}-[0-9]{2}/
 const formattedTime = /[0-9]{2}:[0-9]{2}/;
 
-  //incoming data looks like:  
-  //            {
-            // "data": {
-            //   "first_name": "first",
-            //   "mobile_number": "800-555-1212",
-            //   "reservation_date": "2025-01-01",
-            //   "reservation_time": "13:30",
-            //   "people": 1
-            // }
-            //   }
-  
 
 //check if reservation properties are valid
 function hasValidProperties(req, res, next){

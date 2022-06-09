@@ -16,7 +16,8 @@ import ReservationDisplay from "../layout/reservations/ReservationDisplay";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([])
-  const [reservationsError, setReservationsError] = useState(null);
+  const [reservationsError, setReservationsError] = useState(null)
+  const [tablesError, setTablesError] = useState(null)
   const history = useHistory()
   const query = useQuery();
   const queryDate = query.get("date")
@@ -35,8 +36,10 @@ function Dashboard({ date }) {
 
   function loadDashboard() {
     const abortController = new AbortController();
+    setReservationsError(null)
+    setTablesError(null)
     const resDate = queryDate ? queryDate : date
-    listTables(abortController.signal).then(setTables)
+    listTables(abortController.signal).then(setTables).catch(setTablesError)
     listReservations({ date: resDate }, abortController.signal)
       .then(
         data => {
@@ -75,7 +78,6 @@ function Dashboard({ date }) {
       <TableDisplay 
       table={table}
       key={table.table_id}
-      loadDashboard={loadDashboard}
       />
     ))
   }
@@ -99,6 +101,7 @@ function Dashboard({ date }) {
         </div>
       </div>
       <ErrorAlert error={reservationsError} />
+      <ErrorAlert error={tablesError} />
       <div>
         <ReservationList />
       </div>

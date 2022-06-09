@@ -93,14 +93,14 @@ function validateTable(req, res, next){
 }
 
 function checkOccupied(req, res, next){
-  const status = res.locals.table.status
-  if(status !== "occupied"){
+  const table = res.locals.table
+  if(table.reservation_id === null){
     return next({
       status: 400,
       message: "cannot clear table that is not occupied"
-    })
+       })
   }
-  return next()
+  next()
 }
 
 

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { listReservations } from "../utils/api";
+import ErrorAlert from "./ErrorAlert";
 import ReservationDisplay from "./reservations/ReservationDisplay";
 
 function SearchBar(){
@@ -8,6 +9,7 @@ function SearchBar(){
     }
     const [form, setForm] = useState(initialNumber)
     const [reservations, setReservations] = useState([])
+    const [showError, setShowError] = useState(null)
 
     useEffect(() => {
         const initialForm = {
@@ -36,6 +38,7 @@ function SearchBar(){
         const abortController = new AbortController()
         const parameters = {mobile_number: form.mobile_number}
         setForm(initialNumber)
+        setShowError(null)
         const response = await listReservations(parameters, abortController.signal)
         setReservations(response)
     }
@@ -58,6 +61,7 @@ function SearchBar(){
           <button type="submit">Find</button>
       </div>
       </form>
+      <ErrorAlert error={showError} />
         <div>{reservationList}</div>
     </div>
     )

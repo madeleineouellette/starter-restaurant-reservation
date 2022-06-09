@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import { listTables, seatReservation } from "../../utils/api";
+import ErrorAlert from "../ErrorAlert";
 
 function SeatTable(){
     const history = useHistory()
     const [tablesList, setTablesList] = useState([])
     const {reservation_id} = useParams()
     const [tableId, setTableId] = useState(0)
+    const [showError, setShowError] = useState(null)
 
     useEffect(() => {
         const abortController = new AbortController()
@@ -25,6 +27,7 @@ function SeatTable(){
 
     const submitHandler = async (event) => {
         const abortController = new AbortController()
+        setShowError(false)
         event.preventDefault()
         await seatReservation(reservation_id, tableId, abortController.signal)
         history.push("/dashboard")
@@ -42,6 +45,7 @@ function SeatTable(){
     
     return (
         <div>
+            <ErrorAlert error={showError} />
             <h3>Seating for Reservation #{reservation_id}</h3>
                  <form onSubmit={submitHandler}>
                     <select onChange={handleChange} name="table_id">

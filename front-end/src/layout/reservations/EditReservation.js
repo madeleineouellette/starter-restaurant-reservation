@@ -3,10 +3,12 @@ import ReservationForm from "./ReservationForm";
 import { readReservation, updateReservation } from "../../utils/api";
 import { useParams, useHistory } from "react-router";
 import { formatAsDate, formatAsTime } from "../../utils/date-time"
+import ErrorAlert from "../ErrorAlert";
 
 
 function EditReservation(){
     const {reservation_id} = useParams()
+    const [showError, setShowError] = useState(null)
     const history = useHistory()
     const initialFormData = {
         first_name: "",
@@ -37,6 +39,7 @@ function EditReservation(){
 
     const submitHandler = async (event) => {
         const abortController = new AbortController()
+        setShowError(false)
         event.preventDefault()
         await updateReservation(formData, abortController.signal)
         history.push(`/dashboard?date=${formData.reservation_date}`)
@@ -45,6 +48,7 @@ function EditReservation(){
     return (
         <div>
             <h2>Edit Reservation:</h2>
+            <ErrorAlert error={showError} />
             <ReservationForm 
             handleChange={handleChange}
             submitHandler={submitHandler}

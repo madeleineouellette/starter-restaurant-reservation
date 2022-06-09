@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import {createTable} from "../../utils/api"
-
+import ErrorAlert from "../ErrorAlert";
 
 
 function NewTable(){
     const history = useHistory()
+    const [showError, setShowError] = useState(null)
+
     const initialFormData = {
         table_name: "",
         capacity: 0
@@ -22,6 +24,7 @@ function NewTable(){
     const submitHandler = async (event) => {
         const abortController = new AbortController()
         event.preventDefault()  
+        setShowError(false)
         const newTable = {
             table_name: formData.table_name,
             capacity: Number(formData.capacity)
@@ -34,6 +37,7 @@ function NewTable(){
 
    return (
        <div className="mb-3 container-fluid">
+            <ErrorAlert className="alert alert-danger" error={showError} />
            <h2 className="text-center">New table:</h2>
            <form onSubmit={submitHandler}>
                 <div>

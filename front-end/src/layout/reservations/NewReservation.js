@@ -19,12 +19,17 @@ function NewReservation(){
     const [formData, setFormData] = useState(initialFormData)
     const [showError, setShowError] = useState(false)
 
-    const handleChange = (event) => {
-        event.preventDefault()
-        setFormData((newReservation) => ({
-            ...newReservation, [event.target.name]: event.target.value
-        }))
-    }
+    function handleChange({ target }) {
+        const { name, value } = target;
+        switch (name) {
+          case "people":
+            setFormData({ ...formData, [name]: parseInt(value) });
+            break;
+          default:
+            setFormData({ ...formData, [name]: value });
+            break;
+        }
+      }
 
     function formatTime(time) {
         let formatedTime = time.split("");
@@ -57,7 +62,7 @@ function NewReservation(){
         setFormData(initialFormData)
         history.push(`/dashboard?date=${formData.reservation_date}`)
     }
-    
+
     return (
         <div>
             <h2>Create A New Reservation:</h2>
