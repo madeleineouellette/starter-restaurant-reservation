@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+# Deployed site: https://periodic-tables-frontend-mo.herokuapp.com/dashboard
+
+# Capstone: Restaurant Reservation System
+>>>>>>> ab488b6b5afc7a07613ecc5e55eebee834be6b3c
 
 # Periodic Tables
 
