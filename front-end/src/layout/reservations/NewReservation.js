@@ -65,7 +65,7 @@ function NewReservation(){
 
     return (
         <div>
-            <h2>Create A New Reservation:</h2>
+            <h2 className="header-bar text-center">Create A New Reservation:</h2>
             <ErrorAlert error={showError} />
             <ReservationForm 
             handleChange={handleChange}

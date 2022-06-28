@@ -80,8 +80,8 @@ function ReservationForm({ handleChange, submitHandler, formData }){
                     />
                 </div>
                 <div className="d-grid col-3 mx-auto">
-                <button type="submit" className="btn btn-primary text-white btn-lg">Submit</button>
-                <button className="btn btn-secondary text-white btn-lg" onClick={() => history.push("/")}>Cancel</button>
+                <button type="submit" className="button" style={{ color: "white"}}>Submit</button>
+                <button className="button" style={{ color: "white"}} onClick={() => history.push("/")}>Cancel</button>
                 </div>
             </form>
         </div>

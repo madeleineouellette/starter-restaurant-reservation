@@ -1,6 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Spectral+SC:wght@200&display=swap');
+
+* {
+  scroll-behavior: smooth;
+  font-family: 'Spectral SC', serif;
+}
+
+
 .side-bar {
-  background-color: #4C6D91;
+  background-color:#C77D78;
   min-width: 200px;
 }
 
+body {
+  background-color: #AFCEB3;
+}
+
+.border{
+  padding: 15px;
+  margin: 10px;
+}
+
+.date-button{
+  background: #FAAA7D;
+}
+
+.res-button {
+  background: #612F13;
+}
+
+button {
+  border: 0;
+  background: #FAAA7D;
+  border-radius: 4px;
+  box-shadow: 0 5px 0 #612F13;
+  color: #FAAA7D;
+  cursor: pointer;
+  font: inherit;
+  margin: 2px;
+  outline: 0;
+  padding: 12px 20px;
+  transition: all .1s linear;
+}
+
+.dashboard-res-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px;
+  border: black;
+  background-color: white;
+}
+
+.date-button-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.table-data-list {
+  margin: 0;
+  text-align: left;
+}
+
+.dashboard-table{
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px;
+  border: black;
+  background-color: white;
+}
+
+.header-bar {
+  background-color:#C77D78;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+}
 

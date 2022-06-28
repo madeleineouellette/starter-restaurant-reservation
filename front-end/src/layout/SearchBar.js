@@ -45,7 +45,7 @@ function SearchBar(){
 
     return (
     <div> 
-        <h3>Search by Mobile Number</h3>
+        <h3 className="header-bar">Search by Mobile Number</h3>
         <form onSubmit={findHandler}>
         <div>
         <input
@@ -58,7 +58,7 @@ function SearchBar(){
         />
         </div>
         <div>
-          <button type="submit">Find</button>
+          <button type="submit" style={{ color: "white"}}>Find</button>
       </div>
       </form>
       <ErrorAlert error={showError} />

@@ -37,12 +37,11 @@ function TableDisplay({table}){
       ) : (<p></p>)
 
         return (
-            <div className="container-fluid" style={{ width: '18rem' }}>
+            <div className="dashboard-table container-fluid" style={{ width: '18rem' }}>
                 <ErrorAlert error={showError} />
-                <div>
                     <div className="card">
                         <div className="card-body">
-                            <div className="card-title" key={table_name}>
+                            <div className="table-data-list card-title" key={table_name}>
                                 <h5>Table: <span>{table_name}</span></h5>
                             </div>
                             <div className="card-text" key={table_id}>
@@ -59,7 +58,6 @@ function TableDisplay({table}){
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         )
 }

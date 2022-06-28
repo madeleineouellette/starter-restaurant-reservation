@@ -38,7 +38,7 @@ function NewTable(){
    return (
        <div className="mb-3 container-fluid">
             <ErrorAlert className="alert alert-danger" error={showError} />
-           <h2 className="text-center">New table:</h2>
+           <h2 className="header-bar text-center">New table:</h2>
            <form onSubmit={submitHandler}>
                 <div>
                     <label>Table Name:</label>
@@ -62,8 +62,8 @@ function NewTable(){
                     />
                 </div>
                 <div className="d-grid col-3 mx-auto">
-                <button type="submit" className="btn btn-primary text-white btn-lg">Submit</button>
-                <button className="btn btn-secondary text-white btn-lg" onClick={() => history.goBack()}>Cancel</button>
+                <button type="submit" className="button" style={{ color: "white"}}>Submit</button>
+                <button className="button" style={{ color: "white"}} onClick={() => history.goBack()}>Cancel</button>
                 </div>
            </form>
        </div>

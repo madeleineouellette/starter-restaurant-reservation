@@ -82,39 +82,58 @@ function Dashboard({ date }) {
     ))
   }
 
-  const ReservationList = () => {
-    return reservations?.map((reservation) => (
-      <ReservationDisplay 
-      reservation={reservation}
-      key={reservation.reservation_id}
-      />
-    ))
-  }
+  // const ReservationList = () => {
+  //   return reservations?.map((reservation) => (
+  //     <ReservationDisplay 
+  //     reservation={reservation}
+  //     key={reservation.reservation_id}
+  //     />
+  //   ))
+  // }
+
+  const reservationList =
+  reservations && reservations.length ? 
+ (reservations?.map((reservation) => (
+    <ReservationDisplay 
+    reservation={reservation}
+    key={reservation.reservation_id}
+    />
+  ))) : "No reservations found for this date."
   
 
   return (
     <main>
       <h1 className="text-center">Dashboard</h1>
       <div>
-        <div className="container d-grid d-md-flex mb-3">
-        <h4 className="col text-center"> Reservations for {sameDate ? today() : queryDate}</h4>
+        <div className="date-button-container d-grid d-md-flex mb-3">
+        <h4 className="col text-center header-bar"> Reservations for {sameDate ? today() : queryDate}</h4>
         </div>
       </div>
       <ErrorAlert error={reservationsError} />
       <ErrorAlert error={tablesError} />
-      <div>
-        <ReservationList />
-      </div>
       <div className="d-flex justify-content-between m-4">
-          <button className="btn btn-secondary px-3 py-2" onClick={onPreviousClick}>Previous</button>
-          <button className="btn btn-primary px-3 py-2" onClick={() => history.push("/")}>Today</button>
-          <button className="btn btn-secondary px-3 py-2" onClick={onNextClick}>Next</button>
+          <button className="btn date-button px-3 py-2" onClick={onPreviousClick}>Previous</button>
+          <button className="btn date-button px-3 py-2" onClick={() => history.push("/")}>Today</button>
+          <button className="btn date-button px-3 py-2" onClick={onNextClick}>Next</button>
         </div>
-      <h4 className="text-center">Tables</h4>
-      <div>
-        <TableList />
+      <div className="container">
+      <div className="row">
+        <div className="col">
+      <img src="https://images.unsplash.com/photo-1616091216791-a5360b5fc78a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=790&q=80" 
+      alt="outdoor restaurant" className="rounded float-end" height="700" width="550"/>
       </div>
-        
+      <div className="col">
+        {/* <ReservationList /> */}
+        {reservationList}
+      </div>
+      </div>
+      </div>
+      <h4 className="header-bar text-center">Tables</h4>
+      <div className="container-fluid">
+        <div className="row">
+          <TableList />
+          </div>
+          </div>
     </main>
   );
 }
