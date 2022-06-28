@@ -28,6 +28,32 @@ Periodic Tables is a restaurant reservation management application that allows t
 
 ## Summary of Features
 
+### Manage reservations
+
+![manage reservations](https://i.postimg.cc/NFF4Qx16/dashboard.png)
+
+### Table availability listed on Dashboard
+
+![table availability](https://i.postimg.cc/ydYhTTpM/dashboard-2.png)
+
+### Create new reservation
+
+![create reservation form](https://i.postimg.cc/8PrRwcwz/new-res.png)
+
+### Search Reservations
+
+![search reservations](https://i.postimg.cc/pLJqYyXn/search.png)
+![search res 2](https://i.postimg.cc/Y9Z3qW8T/search-2.png)
+![search res 3](https://i.postimg.cc/15cpb2xk/search-3.png)
+
+### Create tables
+
+![create tables](https://i.postimg.cc/QMV19MBD/new-table.png)
+
+### Seat tables
+
+![seat tables](https://i.postimg.cc/PJnwRzSf/seat-table.png)
+
 ## API
 
 ### Create Reservation
