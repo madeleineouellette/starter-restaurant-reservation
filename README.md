@@ -30,6 +30,8 @@ Periodic Tables is a restaurant reservation management application that allows t
 
 ### Manage reservations
 
+Reservations can be viewed on the dashboard. The dashboard will default to show reservations for today, but the user can click `Previous` or `Next` to view reservations on other dates. 
+
 ![manage reservations](https://i.postimg.cc/NFF4Qx16/dashboard.png)
 
 ### Table availability listed on Dashboard
@@ -38,9 +40,13 @@ Periodic Tables is a restaurant reservation management application that allows t
 
 ### Create new reservation
 
+Create a reservation by clicking `New Reservation` in the navigation bar. A reservation requires a customer's name, party size, mobile number, reservation date, and reservation time.
+
 ![create reservation form](https://i.postimg.cc/8PrRwcwz/new-res.png)
 
 ### Search Reservations
+
+Search reservations by mobile number by clicking `Search` in the navigation bar. Either type in phone number, or click search to see a list of all reservations.
 
 ![search reservations](https://i.postimg.cc/pLJqYyXn/search.png)
 ![search res 2](https://i.postimg.cc/Y9Z3qW8T/search-2.png)
@@ -48,9 +54,13 @@ Periodic Tables is a restaurant reservation management application that allows t
 
 ### Create tables
 
+Create a table by clicking `New Table` in the navigation bar. A table requires a table name and capacity.
+
 ![create tables](https://i.postimg.cc/QMV19MBD/new-table.png)
 
 ### Seat tables
+
+Seat customers by clicking `Seat` on a reservation. Note, the reservation must not be 'cancelled' or 'finished' to seat customers. When `Seat` is clicked, the user will be taken to the seating page where they can choose a table for the reservation. Reservations may only be sat at tables where the party size is less than or equal to the capacity of the table.
 
 ![seat tables](https://i.postimg.cc/PJnwRzSf/seat-table.png)
 
