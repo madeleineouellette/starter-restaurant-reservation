@@ -51,8 +51,8 @@ function SeatTable(){
                     <select onChange={handleChange} name="table_id">
                          {tableOptions}
                      </select>
-                    <button className="btn btn-primary text-white" type="submit">Submit</button>
-                    <button className="btn btn-secondary text-white" onClick={() => history.push("/")}>Cancel</button>
+                    <button className="button" style={{ color: "white"}} type="submit">Submit</button>
+                    <button className="button" style={{ color: "white"}} onClick={() => history.push("/")}>Cancel</button>
                 </form>
         </div>
     )
